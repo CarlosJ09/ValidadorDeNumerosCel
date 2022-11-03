@@ -1,3 +1,7 @@
 <template>
-    <h1>Laravel 9, vite and vuejs</h1>
+    <div>
+        <div>
+            <RouterView />
+        </div>
+    </div>
 </template>

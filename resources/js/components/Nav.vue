@@ -1,0 +1,36 @@
+<template>
+    <div
+        class="nav bg-white fixed w-full flex items-center justify-between px-8 border-slate-500 border-b-2"
+    >
+        <img class="w-44 h-auto" src="../../assets/sendIU.png" alt="" />
+        <div class="flex items-center">
+            <div class="menu">
+                <ul>
+                    <li
+                        class="mr-2 font-bold hover:text-gray-700 hover:cursor-pointer"
+                    >
+                        User_name
+                        <ul class="hidden text-black bg-white text-center absolute p-4 border-black border">
+                            <li class="hover:text-gray-700">Usuario</li>
+                            <li class="hover:text-gray-700">Logout</li>
+                            <li class="hover:text-gray-700">Settings</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <span class=""
+                ><img
+                    class="bg-cover w-8"
+                    src="../../assets/ic-profile_97616.png"
+                    alt=""
+            /></span>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "Nav",
+    components: {},
+};
+</script>
