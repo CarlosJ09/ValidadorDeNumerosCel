@@ -38,20 +38,62 @@
                             Importar
                         </button>
                     </div>
-                    <div v-show="validar" class="text-center bg-blue-300">
-                        <vue-csv-import
-                            v-slot="{ file }"
-                            v-model="csv"
-                            :fields="{
-                                name: { required: false, label: 'Name' },
-                                phone: { required: true, label: 'Phone' },
-                            }"
-                        >
-                            <vue-csv-toggle-headers></vue-csv-toggle-headers>
-                            <vue-csv-errors></vue-csv-errors>
-                            <vue-csv-input></vue-csv-input>
-                            <vue-csv-map :auto-match="false">{{file.fields}}</vue-csv-map>
-                        </vue-csv-import>
+
+                    <!-- Validacion -->
+                    <div
+                        v-show="validar"
+                        class="fixed text-center bg-blue-300 w-max h-1/2 inset-0"
+                    >
+                        <input
+                            type="file"
+                            accept=".csv"
+                            @change="handleFileUpload($event)"
+                        />
+                        <table v-if="parsed" class="">
+                            <thead class="">
+                                <tr>
+                                    <th
+                                        v-for="(header, key) in content.meta
+                                            .fields"
+                                        v-bind:key="'header-' + key"
+                                    >
+                                        {{ header }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="">
+                                <tr
+                                    v-for="(row, rowKey) in content.data"
+                                    v-bind:key="'row-' + rowKey"
+                                >
+                                    <td
+                                        v-for="(column, columnKey) in content
+                                            .meta.fields"
+                                        v-bind:key="
+                                            'row-' +
+                                            rowKey +
+                                            '-column-' +
+                                            columnKey
+                                        "
+                                    >
+                                        <div>
+                                            <input
+                                                type="text"
+                                                v-model="
+                                                    content.data[rowKey][column]
+                                                "
+                                            />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <button
+                                    class="bg-slate-700 text-white"
+                                    v-on:click="parseFile"
+                                >
+                                    Cambiar numero
+                                </button>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -79,7 +121,11 @@ import {
     VueCsvToggleHeaders,
     VueCsvErrors,
     VueCsvMap,
+    VueCsvSubmit,
 } from "vue-csv-import";
+
+import Papa from "papaparse";
+import axios from "axios";
 
 export default {
     name: "ValiRapida",
@@ -89,14 +135,51 @@ export default {
         VueCsvToggleHeaders,
         VueCsvErrors,
         VueCsvMap,
+        VueCsvSubmit,
     },
     data() {
         return {
             validar: false,
-            items: [],
+            file: "",
+            content: [],
+            parsed: false,
         };
     },
     props: {},
-    mounted() {},
+    methods: {
+        handleFileUpload(event) {
+            this.file = event.target.files[0];
+            this.parseFile();
+        },
+        parseFile() {
+            Papa.parse(this.file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function (results) {
+                    this.content = results;
+                    this.parsed = true;
+                    console.log(results.data);
+
+                    results.data.forEach((nombre) => {
+                        return (nombre.Phone = parseInt(nombre.Phone) + 4);
+                    });
+
+                    results.data.forEach((el) => {
+                        console.log(el.Phone);
+                    });
+                }.bind(this),
+            });
+        },
+        submitUpdates() {
+            axios
+                .post("/Validacion1", this.content.data)
+                .then(function () {
+                    console.log("SUCCESS!!");
+                })
+                .catch(function () {
+                    console.log("FAILURE!!");
+                });
+        },
+    },
 };
 </script>

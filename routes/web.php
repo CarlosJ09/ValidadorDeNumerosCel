@@ -24,3 +24,4 @@ Route::get('/Home', function () {
 Route::get('/Validacion', function () {
     return view('welcome');
 });
+
