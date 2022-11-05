@@ -115,28 +115,12 @@
 </template>
 
 <script>
-import {
-    VueCsvImport,
-    VueCsvInput,
-    VueCsvToggleHeaders,
-    VueCsvErrors,
-    VueCsvMap,
-    VueCsvSubmit,
-} from "vue-csv-import";
-
 import Papa from "papaparse";
 import axios from "axios";
 
 export default {
     name: "ValiRapida",
-    components: {
-        VueCsvImport,
-        VueCsvInput,
-        VueCsvToggleHeaders,
-        VueCsvErrors,
-        VueCsvMap,
-        VueCsvSubmit,
-    },
+    components: {},
     data() {
         return {
             validar: false,
