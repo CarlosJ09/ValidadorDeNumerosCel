@@ -40,7 +40,7 @@ html {
 }
 
 /* sideBar Responsive */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
     .titulo {
         font-size: medium;
     }
@@ -49,7 +49,7 @@ html {
         word-wrap: break-word;
     }
     .icono {
-        margin-left: 0;
+        margin-left: 0 !important;
     }
 }
 

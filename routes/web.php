@@ -25,3 +25,7 @@ Route::get('/Validacion', function () {
     return view('welcome');
 });
 
+Route::get('/Validacion1', 'userController@download')
+    ->name('users.download');
+
+

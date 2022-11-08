@@ -106,10 +106,10 @@
 
 <script>
 import Chart from "chart.js/auto";
-import Nav from "./Nav.vue";
-import sideBar from "./sideBar.vue";
+import Nav from "../js/components/Nav.vue";
+import sideBar from "../js/components/sideBar.vue";
 
-import "../../css/app.css";
+import "../css/app.css";
 
 export default {
     name: "Home",

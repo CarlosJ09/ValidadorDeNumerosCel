@@ -2,9 +2,9 @@ import "./bootstrap";
 import { createApp, VueElement } from "vue";
 import { createRouter, createWebHistory } from 'vue-router';
 import app from './components/app.vue';
-import Home from './components/Home.vue';
-import Form from './components/Form.vue';
-import Validacion from './components/Validacion.vue'
+import Home from '../views/Home.vue';
+import Form from '../views/Form.vue';
+import Validacion from '../views/Validacion.vue'
 
 const routes = [
     {path: "/", component: Form},

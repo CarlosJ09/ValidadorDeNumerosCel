@@ -15,7 +15,7 @@
                     margin-top: 74px;
                 "
             >
-                <div class="w-11/12 mt-10">
+                <div class="w-11/12 mt-4">
                     <button
                         class="p-2 w-44 border-2 border-gray-600 hover:bg-white"
                         v-bind:class="{ bwhite: valiRapida }"
@@ -105,10 +105,10 @@
 </template>
 
 <script>
-import Nav from "./Nav.vue";
-import sideBar from "./sideBar.vue";
-import ValiRapida from "./ValiRapida.vue";
-import ValiMasiva from "./valiMasiva.vue";
+import Nav from "../js/components/Nav.vue";
+import sideBar from "../js/components/sideBar.vue";
+import ValiRapida from "../js/components/ValiRapida.vue";
+import ValiMasiva from "../js/components/valiMasiva.vue";
 
 export default {
     name: "Validacion",
