@@ -16,7 +16,7 @@
             />
         </div>
 
-        <div class="flex ml-12 mt-12">
+        <div class="flex justify-center gap-x-24 gap-y-8 flex-wrap mt-12">
             <div class="flex flex-col">
                 <p class="font-bold">Seleccione el archivo a validar.</p>
                 <div
@@ -42,7 +42,7 @@
             </div>
 
             <!-- Seleccionar Columna -->
-            <div class="flex flex-col ml-12">
+            <div class="flex flex-col text-center">
                 <p class="text-md mb-2 font-bold">
                     Seleccione la columna que contiene los numeros
                 </p>
@@ -69,11 +69,8 @@
             @change="handleFileUpload($event)"
             class="bg-slate-700 text-white font-bold text-center p-2"
         />
-        <div class="overflow-auto h-80 w-full mt-4 ">
-            <table
-                v-if="parsed"
-                class="border-spacing-0 border-separate"
-            >
+        <div class="overflow-auto h-80 w-full mt-4">
+            <table v-if="parsed" class="border-spacing-0 border-separate">
                 <thead class="sticky top-0 left-0 bg-slate-700 text-white">
                     <tr>
                         <th
@@ -110,7 +107,7 @@
 
         <button
             class="bg-slate-700 border rounded-lg mt-6 p-2 text-white"
-            @click="download"
+            @click="submitUpdates"
         >
             Validar
         </button>
@@ -120,7 +117,7 @@
 <!-- Logica de Validacion -->
 <script>
 import Papa from "papaparse";
-import Axios from "axios";
+import axios from "axios";
 
 export default {
     name: "ValiRapida",
@@ -191,7 +188,7 @@ export default {
                             }
 
                             //Si no tienen un comienzo valido
-                            if (
+                            if ( 
                                 nombre.Phone.indexOf("809") == 0 ||
                                 nombre.Phone.indexOf("829") == 0 ||
                                 nombre.Phone.indexOf("849") == 0
@@ -224,9 +221,15 @@ export default {
                 }.bind(this),
             });
         },
-        download() {
-            const url = "/Validacion1";
-            window.location.href = url;
+        submitUpdates() {
+            axios
+                .post("/Validacion/File", this.content.data)
+                .then(function () {
+                    console.log("SUCCESS!!");
+                })
+                .catch(function () {
+                    console.log("FAILURE!!");
+                });
         },
     },
 };

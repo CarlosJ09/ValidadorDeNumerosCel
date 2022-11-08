@@ -5,7 +5,7 @@
         <div class="fixed flex mb-80 w-44 h-auto">
             <img
                 class="bg-white bg-cover border-4 p-2 border-gray-600 rounded-2xl text-center"
-                src="../../assets/sendIU.png"
+                src="../assets/sendIU.png"
                 alt=""
             />
         </div>
@@ -24,7 +24,7 @@
                 <span class="fixed" style="margin-left: 210px"
                     ><img
                         class="bg-cover w-6"
-                        src="../../assets/ic-profile_97616.png"
+                        src="../assets/ic-profile_97616.png"
                         alt=""
                 /></span>
             </div>
@@ -49,7 +49,7 @@
                         <span class="fixed ml-52"
                             ><img
                                 class="bg-cover w-8"
-                                src="../../assets/icons8-desbloquear-96.png"
+                                src="../assets/icons8-desbloquear-96.png"
                                 alt=""
                         /></span>
                     </div>
