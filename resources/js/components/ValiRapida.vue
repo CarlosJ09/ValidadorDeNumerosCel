@@ -1,129 +1,18 @@
-<template>
-    <div
-        class="flex flex-col bg-white p-6 justify-start border border-gray-800 h-5/6"
-    >
-        <div class="flex items-center mb-4">
-            <span><img src="../../assets/check.png" alt="" /></span>
-            <h2 class="text-2xl ml-2">Validación Telefónico</h2>
-        </div>
-        <p class="ml-12 text-md mb-2 font-bold">
-            Ingrese el nombre del cliente
-        </p>
-        <div class="flex items-center ml-8">
-            <input
-                type="text"
-                class="border border-black mx-4 rounded-lg p-0.5 w-64"
-            />
-        </div>
-
-        <div class="flex justify-center gap-x-24 gap-y-8 flex-wrap mt-12">
-            <div class="flex flex-col">
-                <p class="font-bold">Seleccione el archivo a validar.</p>
-                <div
-                    class="flex flex-col justify-center mt-1 items-center bg-slate-100 max-w-80 max-h-44 p-6 border-gray-300 border-2 rounded-lg"
-                >
-                    <img
-                        src="../../assets/CSV.png"
-                        alt="CSV"
-                        class="h-12 w-12"
-                    />
-                    <span class="text-sm text-gray-800 text-center"
-                        >Favor cargar el archivo en formato CSV</span
-                    >
-                    <div>
-                        <button
-                            class="mt-4 border bg-slate-800 text-white p-1 rounded-xl px-4 text-center"
-                            v-on:click="validar = !validar"
-                        >
-                            Importar
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Seleccionar Columna -->
-            <div class="flex flex-col text-center">
-                <p class="text-md mb-2 font-bold">
-                    Seleccione la columna que contiene los numeros
-                </p>
-                <select
-                    name="list"
-                    class="w-72 bg-white border border-gray-300 h-8 rounded-lg"
-                >
-                    <option value="1">Opcion1</option>
-                    <option value="2">Opcion2</option>
-                    <option value="3">Opcion3</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <!-- Validacion -->
-    <div
-        v-show="validar"
-        class="fixed flex flex-wrap border-2 rounded-xl border-slate-700 flex-col justify-center items-center p-8 bg-gray-400 w-max h-max top-2 right-0 left-0 m-auto"
-    >
-        <input
-            type="file"
-            accept=".csv"
-            @change="handleFileUpload($event)"
-            class="bg-slate-700 text-white font-bold text-center p-2"
-        />
-        <div class="overflow-auto h-80 w-full mt-4">
-            <table v-if="parsed" class="border-spacing-0 border-separate">
-                <thead class="sticky top-0 left-0 bg-slate-700 text-white">
-                    <tr>
-                        <th
-                            v-for="(header, key) in content.meta.fields"
-                            v-bind:key="'header-' + key"
-                        >
-                            {{ header }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="">
-                    <tr
-                        v-for="(row, rowKey) in content.data"
-                        v-bind:key="'row-' + rowKey"
-                    >
-                        <td
-                            v-for="(column, columnKey) in content.meta.fields"
-                            v-bind:key="
-                                'row-' + rowKey + '-column-' + columnKey
-                            "
-                        >
-                            <div>
-                                <input
-                                    type="text"
-                                    v-model="content.data[rowKey][column]"
-                                    class="text-center px-4"
-                                />
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <button
-            class="bg-slate-700 border rounded-lg mt-6 p-2 text-white"
-            @click="submitUpdates"
-        >
-            Validar
-        </button>
-    </div>
-</template>
-
 <!-- Logica de Validacion -->
 <script>
 import Papa from "papaparse";
 import axios from "axios";
+import JsonCSV from "vue-json-csv";
 
+let valido = false;
 export default {
     name: "ValiRapida",
-    components: {},
+    components: {
+        downloadCsv: JsonCSV,
+    },
     data() {
         return {
+            valido,
             validar: false,
             file: "",
             content: [],
@@ -188,7 +77,7 @@ export default {
                             }
 
                             //Si no tienen un comienzo valido
-                            if ( 
+                            if (
                                 nombre.Phone.indexOf("809") == 0 ||
                                 nombre.Phone.indexOf("829") == 0 ||
                                 nombre.Phone.indexOf("849") == 0
@@ -214,7 +103,7 @@ export default {
                             }
                         } catch (error) {
                             console.error(
-                                `Favor introducir archivo con las columnas validas ${error}`
+                                `Favor introducir archivo con las columnas validas ${error} ${valido}`
                             );
                         }
                     });
@@ -234,3 +123,115 @@ export default {
     },
 };
 </script>
+
+<template>
+    <div
+        class="flex flex-col bg-white p-6 justify-start border border-gray-800 h-5/6"
+    >
+        <div class="flex items-center mb-4">
+            <span><img src="../../assets/check.png" alt="" /></span>
+            <h2 class="text-2xl ml-2">Validación Telefónico</h2>
+        </div>
+        <p class="ml-12 text-md mb-2 font-bold">
+            Ingrese el nombre del cliente
+        </p>
+        <div class="flex items-center ml-8">
+            <input
+                type="text"
+                class="border border-black mx-4 rounded-lg p-0.5 w-64"
+            />
+        </div>
+
+        <div class="flex justify-center text-center gap-x-24 gap-y-8 flex-wrap mt-12">
+            <div class="flex flex-col">
+                <p class="font-bold text-lg">Seleccione el archivo a validar.</p>
+                <div
+                    class="flex flex-col justify-center mt-1 items-center bg-slate-100 max-w-80 max-h-44 p-6 border-gray-300 border-2 rounded-lg"
+                >
+                    <img
+                        src="../../assets/CSV.png"
+                        alt="CSV"
+                        class="h-12 w-12"
+                    />
+                    <span class="text-sm text-gray-800 text-center"
+                        >Favor cargar el archivo en formato CSV</span
+                    >
+                    <div>
+                        <button
+                            class="mt-4 border bg-slate-800 text-white p-1 rounded-xl px-4 text-center"
+                            v-on:click="validar = !validar"
+                        >
+                            Importar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Validacion -->
+    <div
+        v-show="validar"
+        class="fixed flex flex-wrap border-2 rounded-xl border-slate-700 flex-col justify-center items-center p-8 bg-gray-400 w-max h-max top-2 right-0 left-0 m-auto"
+    >
+        <input
+            type="file"
+            accept=".csv"
+            @change="handleFileUpload($event)"
+            class="bg-slate-700 text-white font-bold text-center p-2"
+        />
+        <div class="overflow-auto h-80 w-full mt-4">
+            <table v-if="parsed" class="border-spacing-0 border-separate">
+                <thead class="sticky top-0 left-0 bg-slate-700 text-white">
+                    <tr>
+                        <th
+                            v-for="(header, key) in content.meta.fields"
+                            v-bind:key="'header-' + key"
+                        >
+                            {{ header }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                    <tr
+                        v-for="(row, rowKey) in content.data"
+                        v-bind:key="'row-' + rowKey"
+                    >
+                        <td
+                            v-for="(column, columnKey) in content.meta.fields"
+                            v-bind:key="
+                                'row-' + rowKey + '-column-' + columnKey
+                            "
+                        >
+                            <div>
+                                <input
+                                    type="text"
+                                    v-model="content.data[rowKey][column]"
+                                    class="text-center px-4"
+                                />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--    <button
+            class="bg-slate-700 border rounded-lg mt-6 p-2 text-white hover:bg-slate-600"
+            @click="submitUpdates"
+        >
+            Validar
+        </button> -->
+
+        <div v-show="valido" class="text-red-800 font-bold">
+            <p>Favor introducir archivo con columnas validas</p>
+        </div>
+
+        <button
+            class="p-4 bg-slate-800 text-white hover:bg-slate-600 mt-4 border rounded-lg"
+        >
+            <download-csv :data="content.data">
+                Descargar Archivo ".csv"
+            </download-csv>
+        </button>
+    </div>
+</template>

@@ -7,6 +7,7 @@ import Form from '../views/Form.vue';
 import Validacion from '../views/Validacion.vue'
 import File from './components/File.vue'
 
+
 const routes = [
     {path: "/", component: Form},
     {path: "/Home", component: Home},
