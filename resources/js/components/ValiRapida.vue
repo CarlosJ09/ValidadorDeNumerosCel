@@ -4,7 +4,9 @@ import Papa from "papaparse";
 import axios from "axios";
 import JsonCSV from "vue-json-csv";
 
+//  Flag para mostrar mensaje de error a la hora de descargar archivo
 let valido = false;
+
 export default {
     name: "ValiRapida",
     components: {
@@ -21,6 +23,7 @@ export default {
     },
     props: {},
     methods: {
+        //Subir archivo
         handleFileUpload(event) {
             this.file = event.target.files[0];
             this.parseFile();
@@ -30,9 +33,17 @@ export default {
                 header: true,
                 skipEmptyLines: true,
                 complete: function (results) {
-                    this.content = results;
+                    this.content = results; //Results = Objeto con toda la informacion
                     this.parsed = true;
-                    console.log(results.data);
+
+                    //Objeto con los mensajes de errores para la validacion
+                    let mensajes = {
+                        invalido1: "Contiene caracteres no númericos",
+                        invalido2: "Invalida cantidad de números",
+                        invalido3: "Comienzo de números inválidos",
+                        nA: "N/A",
+                        nValido: "Número valido",
+                    };
 
                     /*Validando String */
                     results.data.forEach((nombre) => {
@@ -58,22 +69,19 @@ export default {
                                 nombre.NumeroValido =
                                     nombre.NumeroValido.split("_").join("");
 
-                                nombre.Reporte =
-                                    "Contiene caracteres no numericos";
+                                nombre.Reporte = mensajes.invalido1;
 
                                 //Si la cantidad de caracteres no es correcta
                                 let telefonoval = nombre.NumeroValido;
                                 if (telefonoval.length != 10) {
-                                    nombre.NumeroValido = "N/A";
-                                    nombre.Reporte =
-                                        "Invalida cantidad de numeros";
+                                    nombre.NumeroValido = mensajes.nA;
+                                    nombre.Reporte = mensajes.invalido2;
                                 }
                             }
                             //Si tiene letras o caracteres raros
                             if (isNaN(nombre.NumeroValido)) {
-                                nombre.NumeroValido = "N/A";
-                                nombre.Reporte =
-                                    "Contiene caracteres no numericos";
+                                nombre.NumeroValido = mensajes.nA;
+                                nombre.Reporte = mensajes.invalido1;
                             }
 
                             //Si no tienen un comienzo valido
@@ -83,13 +91,11 @@ export default {
                                 nombre.Phone.indexOf("849") == 0
                             ) {
                                 if (nombre.NumeroValido.length != 10) {
-                                    nombre.Reporte =
-                                        "Invalida cantidad de numeros";
+                                    nombre.Reporte = mensajes.invalido2;
                                 }
                             } else {
-                                nombre.Reporte =
-                                    "Comienzo de numeros invalidos";
-                                nombre.NumeroValido = "N/A";
+                                nombre.Reporte = mensajes.invalido3;
+                                nombre.NumeroValido = mensajes.nA;
                             }
                             //Si el numero es valido desde el inicio
                             if (
@@ -99,9 +105,10 @@ export default {
                                     nombre.Phone.indexOf("849") == 0) &&
                                 nombre.Phone.length === 10
                             ) {
-                                nombre.Reporte = "Numero valido";
+                                nombre.Reporte = mensajes.nValido;
                             }
                         } catch (error) {
+                            //Excepcion
                             console.error(
                                 `Favor introducir archivo con las columnas validas ${error} ${valido}`
                             );
@@ -112,12 +119,12 @@ export default {
         },
         submitUpdates() {
             axios
-                .post("/Validacion/File", this.content.data)
-                .then(function () {
-                    console.log("SUCCESS!!");
+                .post("/Reports", { reports: this.content.data })
+                .then((response) => {
+                    console.log(response);
                 })
-                .catch(function () {
-                    console.log("FAILURE!!");
+                .catch((error) => {
+                    console.log(error.response);
                 });
         },
     },
@@ -142,9 +149,13 @@ export default {
             />
         </div>
 
-        <div class="flex justify-center text-center gap-x-24 gap-y-8 flex-wrap mt-12">
+        <div
+            class="flex justify-center text-center gap-x-24 gap-y-8 flex-wrap mt-12"
+        >
             <div class="flex flex-col">
-                <p class="font-bold text-lg">Seleccione el archivo a validar.</p>
+                <p class="font-bold text-lg">
+                    Seleccione el archivo a validar.
+                </p>
                 <div
                     class="flex flex-col justify-center mt-1 items-center bg-slate-100 max-w-80 max-h-44 p-6 border-gray-300 border-2 rounded-lg"
                 >
@@ -169,7 +180,7 @@ export default {
         </div>
     </div>
 
-    <!-- Validacion -->
+    <!--Vista tabla de validación -->
     <div
         v-show="validar"
         class="fixed flex flex-wrap border-2 rounded-xl border-slate-700 flex-col justify-center items-center p-8 bg-gray-400 w-max h-max top-2 right-0 left-0 m-auto"
@@ -215,23 +226,37 @@ export default {
                 </tbody>
             </table>
         </div>
-        <!--    <button
-            class="bg-slate-700 border rounded-lg mt-6 p-2 text-white hover:bg-slate-600"
-            @click="submitUpdates"
-        >
-            Validar
-        </button> -->
 
+        <!--Solo se muestra en caso de que no haya data para subir-->
         <div v-show="valido" class="text-red-800 font-bold">
-            <p>Favor introducir archivo con columnas validas</p>
+            <p>No hay ningun archivo seleccionado</p>
         </div>
 
-        <button
-            class="p-4 bg-slate-800 text-white hover:bg-slate-600 mt-4 border rounded-lg"
-        >
-            <download-csv :data="content.data">
-                Descargar Archivo ".csv"
-            </download-csv>
-        </button>
+        <div class="flex justify-center items-center font-bold text-white">
+            <!-- Boton para  descargar el archivo-->
+            <button
+                class="p-4 bg-slate-800 hover:bg-slate-600 mt-4 border-2 rounded-lg"
+                v-on:click="valido = true ? !content.data : (valido = false)"
+            >
+                <download-csv :data="content.data">
+                    Descargar Archivo ".csv"
+                </download-csv>
+            </button>
+
+            <!-- Boton para subir los cambios -->
+            <form
+                method="POST"
+                v-on:submit.prevent="submitUpdates()"
+                class="mt-4 ml-4"
+            >
+                <button>
+                    <input
+                        type="submit"
+                        value="Subir"
+                        class="bg-slate-800 px-12 py-4 rounded-lg hover:bg-slate-600 hover:cursor-pointer border-2"
+                    />
+                </button>
+            </form>
+        </div>
     </div>
 </template>

@@ -5,14 +5,12 @@ import app from './components/app.vue';
 import Home from '../views/Home.vue';
 import Form from '../views/Form.vue';
 import Validacion from '../views/Validacion.vue'
-import File from './components/File.vue'
 
 
 const routes = [
     {path: "/", component: Form},
     {path: "/Home", component: Home},
     {path: "/Validacion", component: Validacion},
-    {path: "/Validacion/File", component: File},
 ];
 
 const router = createRouter({

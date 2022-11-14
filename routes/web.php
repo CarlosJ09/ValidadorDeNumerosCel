@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +26,11 @@ Route::get('/Validacion', function () {
     return view('welcome');
 });
 
-Route::post('/Validacion/File', function () {
+Route::post('/Validacion', function () {
     return view('welcome');
 });
+
+Route::resource('/Reports', ReportController::class);
+
 
 
