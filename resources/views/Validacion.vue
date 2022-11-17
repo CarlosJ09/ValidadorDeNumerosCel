@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <Nav />
+            <Nav></Nav>
         </div>
         <div class="flex h-screen w-full py-4 overflow-y-hidden">
             <div>
@@ -24,7 +24,7 @@
                             valiMasiva = false;
                         "
                     >
-                        Validacion Rapida
+                        Validación Masiva
                     </button>
                     <button
                         class="p-2 w-44 border-2 border-gray-600 hover:bg-white"
@@ -34,14 +34,14 @@
                             valiRapida = false;
                         "
                     >
-                        Validacion Masiva
+                        Validación Rapida
                     </button>
 
                     <div v-show="valiRapida">
-                        <ValiRapida />
+                        <ValiMasiva />
                     </div>
                     <div v-show="valiMasiva">
-                        <ValiMasiva />
+                        <ValiRapida />
                     </div>
                 </div>
 
@@ -101,14 +101,13 @@
             </div>
         </div>
     </div>
-    
 </template>
 
 <script>
 import Nav from "../js/components/Nav.vue";
 import sideBar from "../js/components/sideBar.vue";
-import ValiRapida from "../js/components/ValiRapida.vue";
-import ValiMasiva from "../js/components/valiMasiva.vue";
+import ValiRapida from "../js/components/valiRapida.vue";
+import ValiMasiva from "../js/components/ValiMasiva.vue";
 
 export default {
     name: "Validacion",

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,8 @@ Route::post('/Validacion', function () {
 });
 
 Route::resource('/Reports', ReportController::class);
+
+Route::resource('/Clients', ClientController::class,);
 
 
 
