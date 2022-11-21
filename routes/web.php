@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,12 @@ use App\Http\Controllers\ClientController;
 */
 
 Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::post('/', [LoginController::class, 'store']);
+
+Route::get('/Create', function () {
     return view('welcome');
 });
 
@@ -33,7 +41,9 @@ Route::post('/Validacion', function () {
 
 Route::resource('/Reports', ReportController::class);
 
-Route::resource('/Clients', ClientController::class,);
+Route::resource('/Clients', ClientController::class);
+
+Route::resource('/createUser', UserController::class);
 
 
 

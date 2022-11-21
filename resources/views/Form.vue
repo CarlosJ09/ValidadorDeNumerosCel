@@ -15,11 +15,11 @@
             <div class="flex items-center mt-8">
                 <input
                     type="text"
-                    id="login"
                     class="border-2 rounded-xl border-gray-700 p-2 w-64"
                     name="login"
                     placeholder="Usuario"
                     v-model="state.email"
+                    required
                 />
                 <span class="fixed" style="margin-left: 210px"
                     ><img
@@ -40,11 +40,11 @@
                     <div class="flex items-center">
                         <input
                             type="password"
-                            id="login"
                             class="border-2 rounded-xl border-gray-700 p-2 w-64"
                             name="login"
                             placeholder="Contraseña"
                             v-model="state.password.password"
+                            required
                         />
                         <span class="fixed ml-52"
                             ><img
@@ -63,13 +63,19 @@
                 </div>
             </div>
 
-            <router-link
+            <button
                 class="bg-slate-800 mt-6 text-center rounded-2xl w-48 py-2 text-white font-bold hover:bg-slate-700"
-                to=/Home
+                type="submit"
                 @click="submitForm"
-                >Ingresar
-            </router-link>
+            >
+                Ingresar
+            </button>
 
+            <router-link
+                class="text-center text-sm text-gray-600 mt-2 hover:text-gray-400"
+                to="/Create"
+                >Registrarse
+            </router-link>
             <router-link
                 class="text-center text-sm text-gray-600 mt-2 hover:text-gray-400"
                 to="/Home"
