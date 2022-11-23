@@ -9,7 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function store(Request $request)
+
+    public function index()
+    {
+        $user = User::all();
+
+        return response()->json($user);
+    }
+    public function register(Request $request)
     {
         $user = new User;
 
@@ -22,6 +29,36 @@ class UserController extends Controller
         $user->save();
 
         Auth::login($user);
-        return redirect()->to('/Home');
+        return redirect()->route('Home');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = [
+            "email" => $request->email,
+            "password" => $request->password,
+            /* "active" => true, */
+        ];
+
+        $remember = ($request->has('remember') ? true : false);
+
+        if (Auth::attempt($credentials, $remember)) {
+
+            $request->session()->regenerate();
+
+            return redirect('/Home');  /* ->intended((route('Home'))); */
+        } else {
+            return redirect()->route('LogIn');
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

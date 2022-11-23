@@ -29,7 +29,7 @@
         <!-- Numero Validado -->
 
         <div class="flex flex-wrap items-center gap-2 mr-16 bg-gray-700 rounded-lg text-white py-6 px-12">
-            <p class="font-bold">Numero Phone:</p>
+            <p class="font-bold">Numero validado:</p>
             <div
                 v-show="existe"
                 class="py-3 px-4 border-2 border-cyan-500 rounded-lg"

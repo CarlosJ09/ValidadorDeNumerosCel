@@ -6,12 +6,16 @@ import Home from "../views/Home.vue";
 import Create from "../views/Create.vue";
 import Form from "../views/Form.vue";
 import Validacion from "../views/Validacion.vue";
+import Reportes from "../views/Reportes.vue";
+
 
 const routes = [
     { path: "/", component: Form },
     { path: "/Home", component: Home },
     { path: "/Create", component: Create },
     { path: "/Validacion", component: Validacion },
+    { path: "/Reportes", component: Reportes },
+
 ];
 
 const router = createRouter({

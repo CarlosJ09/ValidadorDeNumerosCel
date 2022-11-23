@@ -7,7 +7,11 @@
             <sideBar />
         </div>
         <div
-            style="margin-left: 20%; margin-top: 74px;background-color: #E9E9E9;"
+            style="
+                margin-left: 20%;
+                margin-top: 74px;
+                background-color: #e9e9e9;
+            "
             class="dashBoard flex flex-col w-4/5 h-max"
         >
             <h1 class="p-6 font-bold text-2xl">DashBoard</h1>
@@ -51,51 +55,28 @@
                             <th class="px-16">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody class="border-2 bg-white border-slate-900">
+                    <tbody
+                        class="border-2 bg-white border-slate-900"
+                        v-for="report in reports.slice(0, 10)"
+                    >
                         <tr>
                             <td class="border-x-2 border-gray-700">
-                                The Sliding
+                                {{ report.Name }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                Malcolm Lockyer
+                                {{ report.email }}
                             </td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
+                            <td class="border-x-2 border-gray-700">8/7/2002</td>
                             <td class="border-x-2 border-gray-700">
-                                Malcolm Lockyer
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border-x-2 border-gray-700">
-                                Witchy Woman
+                                {{ report.NumeroValido }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                The Eagles
-                            </td>
-                            <td class="border-x-2 border-gray-700">1972</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">
-                                Malcolm Lockyer
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border-x-2 border-gray-700">
-                                Shining Star
+                                {{ report.Phone }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                Earth, Wind, and Fire
+                                {{ report.Phone }}
                             </td>
-                            <td class="border-x-2 border-gray-700">1975</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">
-                                Malcolm Lockyer
-                            </td>
+                            <td class="border-x-2 border-gray-700">Acciones</td>
                         </tr>
                     </tbody>
                 </table>
@@ -156,11 +137,11 @@ export default {
         const myChart2 = new Chart(ctx2, {
             type: "doughnut",
             data: {
-                labels: ["Red", "Blue", "Yellow","Black"],
+                labels: ["Red", "Blue", "Yellow", "Black"],
                 datasets: [
                     {
                         label: "My First Dataset",
-                        data: [300, 50, 100,400],
+                        data: [300, 50, 100, 400],
                         backgroundColor: [
                             "rgb(255, 99, 132)",
                             "rgb(54, 162, 235)",
@@ -201,6 +182,21 @@ export default {
             },
         });
         myChart3;
+    },
+    data() {
+        return {
+            reports: [],
+        };
+    },
+    created() {
+        axios
+            .get("/Reports")
+            .then((response) => {
+                this.reports = JSON.parse(response.data[0].json);
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
     },
 };
 </script>

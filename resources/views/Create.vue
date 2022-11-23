@@ -150,7 +150,7 @@ export default {
     methods: {
         submitUser() {
             axios
-                .post("/createUser", this.user)
+                .post("/Register", this.user)
                 .then((response) => {
                     console.log(response);
                 })

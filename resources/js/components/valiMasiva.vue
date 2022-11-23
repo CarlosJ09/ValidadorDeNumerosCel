@@ -306,7 +306,7 @@ export default {
         },
         submitUpdates() {
             axios
-                .post("/Reports", { reports: this.content.data })
+                .post("/Reports", this.content.data )
                 .then((response) => {
                     console.log(response);
                 })

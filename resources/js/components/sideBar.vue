@@ -21,7 +21,7 @@
                 <div
                     class="flex flex-wrap items-center justify-around border border-b-2 border-slate-500 py-2 hover:bg-gray-200 hover:cursor-pointer"
                 >
-                    <router-link to="/Home">Reportes</router-link>
+                    <router-link to="/Reportes">Reportes</router-link>
                     <span class="icono" style="margin-left: 4rem;"><img src="../../assets/reportes.png" alt="Reportes"></span>
                 </div>
             </div>

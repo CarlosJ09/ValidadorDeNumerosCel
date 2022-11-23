@@ -10,9 +10,13 @@
                         class="mr-2 font-bold hover:text-gray-700 hover:cursor-pointer"
                     >
                         User_name
-                        <ul class="hidden text-black bg-white text-center absolute p-4 border-black border">
+                        <ul
+                            class="hidden text-black bg-white text-center absolute p-4 border-black border"
+                        >
                             <li class="hover:text-gray-700">Usuario</li>
-                            <li class="hover:text-gray-700">Logout</li>
+                            <li class="hover:text-gray-700">
+                                <a href="/logout">Logout</a>
+                            </li>
                             <li class="hover:text-gray-700">Settings</li>
                         </ul>
                     </li>
@@ -29,8 +33,24 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "Nav",
     components: {},
+    data() {
+        return { user: [] };
+    },
+    created() {
+        axios
+            .get("/Register")
+            .then((response) => {
+                this.user = response.data;
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+    },
 };
 </script>
