@@ -244,6 +244,7 @@ export default {
                                 nombre.Phone.indexOf("829") == 0 ||
                                 nombre.Phone.indexOf("849") == 0
                             ) {
+                             
                                 nombre.NumeroValido =
                                     nombre.Phone.split("-").join("");
 
