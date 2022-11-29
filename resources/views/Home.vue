@@ -7,7 +7,11 @@
             <sideBar />
         </div>
         <div
-            style="margin-left: 20%; margin-top: 74px;background-color: #E9E9E9;"
+            style="
+                margin-left: 20%;
+                margin-top: 74px;
+                background-color: #e9e9e9;
+            "
             class="dashBoard flex flex-col w-4/5 h-max"
         >
             <h1 class="p-6 font-bold text-2xl">DashBoard</h1>
@@ -37,7 +41,7 @@
                 </div>
             </div>
             <div class="flex justify-center mt-10 pb-12">
-                <table class="text-center rounded-md">
+                <table class="text-center rounded-md bg-white">
                     <thead class="border-2">
                         <tr
                             class="bg-slate-900 text-white font-bold border-2 border-slate-900"
@@ -64,7 +68,7 @@
                             <td class="border-x-2 border-gray-700">1961</td>
                             <td class="border-x-2 border-gray-700">1961</td>
                             <td class="border-x-2 border-gray-700">
-                                Malcolm Lockyer
+                                boton1
                             </td>
                         </tr>
                         <tr>
@@ -79,7 +83,7 @@
                             <td class="border-x-2 border-gray-700">1961</td>
                             <td class="border-x-2 border-gray-700">1961</td>
                             <td class="border-x-2 border-gray-700">
-                                Malcolm Lockyer
+                                boton2
                             </td>
                         </tr>
                         <tr>
@@ -93,9 +97,6 @@
                             <td class="border-x-2 border-gray-700">1961</td>
                             <td class="border-x-2 border-gray-700">1961</td>
                             <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">
-                                Malcolm Lockyer
-                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -125,7 +126,7 @@ export default {
         const myChart = new Chart(ctx, {
             type: "polarArea",
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: ["Caracteres invalidos", "Validos", "Cantidad de numeros invalida", "Otros"],
                 datasets: [
                     {
                         label: "# of Votes",
@@ -156,11 +157,11 @@ export default {
         const myChart2 = new Chart(ctx2, {
             type: "doughnut",
             data: {
-                labels: ["Red", "Blue", "Yellow","Black"],
+                labels: ["Caracteres invalidos", "Validos", "Cantidad de numeros invalida", "Otros"],
                 datasets: [
                     {
                         label: "My First Dataset",
-                        data: [300, 50, 100,400],
+                        data: [300, 50, 100, 400],
                         backgroundColor: [
                             "rgb(255, 99, 132)",
                             "rgb(54, 162, 235)",
@@ -178,15 +179,16 @@ export default {
         const myChart3 = new Chart(ctx3, {
             type: "pie",
             data: {
-                labels: ["Red", "Blue", "Yellow"],
+                labels: ["Caracteres invalidos", "Validos", "Cantidad de numeros invalida", "Otros"],
                 datasets: [
                     {
                         label: "My First Dataset",
-                        data: [300, 50, 100],
+                        data: [300, 50, 100, 40],
                         backgroundColor: [
                             "rgb(255, 99, 132)",
                             "rgb(54, 162, 235)",
                             "rgb(255, 205, 86)",
+                            "rgb(75, 192, 192)",
                         ],
                         hoverOffset: 4,
                     },
