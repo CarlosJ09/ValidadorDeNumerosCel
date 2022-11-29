@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();          
-            $table->foreignId('client_id');
+            $table->foreignId('client_id')->references('id')->on('clients')->unique();
             $table->string('report_name');
             $table->bigInteger('cant_val');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->references('id')->on('users')->unique();
             $table->json('json');
             $table->timestamps();
         });

@@ -55,48 +55,28 @@
                             <th class="px-16">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody class="border-2 bg-white border-slate-900">
+                    <tbody
+                        class="border-2 bg-white border-slate-900"
+                        v-for="report in reports.slice(0, 10)"
+                    >
                         <tr>
                             <td class="border-x-2 border-gray-700">
-                                The Sliding
+                                {{ report.Name }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                Malcolm Lockyer
+                                {{ report.email }}
                             </td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
+                            <td class="border-x-2 border-gray-700">8/7/2002</td>
                             <td class="border-x-2 border-gray-700">
-                                boton1
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border-x-2 border-gray-700">
-                                Witchy Woman
+                                {{ report.NumeroValido }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                The Eagles
-                            </td>
-                            <td class="border-x-2 border-gray-700">1972</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">
-                                boton2
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border-x-2 border-gray-700">
-                                Shining Star
+                                {{ report.Phone }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                Earth, Wind, and Fire
+                                {{ report.Phone }}
                             </td>
-                            <td class="border-x-2 border-gray-700">1975</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
-                            <td class="border-x-2 border-gray-700">1961</td>
+                            <td class="border-x-2 border-gray-700">Acciones</td>
                         </tr>
                     </tbody>
                 </table>
@@ -126,7 +106,12 @@ export default {
         const myChart = new Chart(ctx, {
             type: "polarArea",
             data: {
-                labels: ["Caracteres invalidos", "Validos", "Cantidad de numeros invalida", "Otros"],
+                labels: [
+                    "Caracteres invalidos",
+                    "Validos",
+                    "Cantidad de numeros invalida",
+                    "Otros",
+                ],
                 datasets: [
                     {
                         label: "# of Votes",
@@ -157,7 +142,7 @@ export default {
         const myChart2 = new Chart(ctx2, {
             type: "doughnut",
             data: {
-                labels: ["Caracteres invalidos", "Validos", "Cantidad de numeros invalida", "Otros"],
+                labels: ["Red", "Blue", "Yellow", "Black"],
                 datasets: [
                     {
                         label: "My First Dataset",
@@ -179,16 +164,21 @@ export default {
         const myChart3 = new Chart(ctx3, {
             type: "pie",
             data: {
-                labels: ["Caracteres invalidos", "Validos", "Cantidad de numeros invalida", "Otros"],
+                labels: [
+                    "Caracteres invalidos",
+                    "Validos",
+                    "Cantidad de numeros invalida",
+                    "Otros",
+                ],
                 datasets: [
                     {
                         label: "My First Dataset",
                         data: [300, 50, 100, 40],
                         backgroundColor: [
-                            "rgb(255, 99, 132)",
-                            "rgb(54, 162, 235)",
-                            "rgb(255, 205, 86)",
                             "rgb(75, 192, 192)",
+                            "rgb(255, 99, 132)",
+                            "rgb(255, 205, 86)",
+                            "rgb(0, 0, 0)",
                         ],
                         hoverOffset: 4,
                     },
@@ -203,6 +193,21 @@ export default {
             },
         });
         myChart3;
+    },
+    data() {
+        return {
+            reports: [],
+        };
+    },
+    created() {
+        axios
+            .get("/Reports")
+            .then((response) => {
+                this.reports = JSON.parse(response.data[0].json);
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
     },
 };
 </script>

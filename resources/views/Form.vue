@@ -11,15 +11,18 @@
         </div>
         <form
             class="flex flex-col justify-center items-center bg-white border-4 rounded-2xl border-gray-600 py-10 pb-8 px-24"
+            method="POST"
+            v-on:submit.prevent="submitUser()"
+            action="{{route('login')}}"
         >
             <div class="flex items-center mt-8">
                 <input
                     type="text"
-                    id="login"
                     class="border-2 rounded-xl border-gray-700 p-2 w-64"
                     name="login"
                     placeholder="Usuario"
-                    v-model="state.email"
+                    v-model="user.email"
+                    required
                 />
                 <span class="fixed" style="margin-left: 210px"
                     ><img
@@ -29,22 +32,22 @@
                 /></span>
             </div>
             <div class="flex justify-center text-center">
-                <span
+                <!-- <span
                     class="text-sm absolute text-red-700"
                     v-if="v$.email.$error"
                     >{{ v$.email.$errors[0].$message }}</span
-                >
+                > -->
             </div>
             <div class="flex my-2 items-center mt-6">
                 <div>
                     <div class="flex items-center">
                         <input
                             type="password"
-                            id="login"
                             class="border-2 rounded-xl border-gray-700 p-2 w-64"
                             name="login"
                             placeholder="Contraseña"
-                            v-model="state.password.password"
+                            v-model="user.password"
+                            required
                         />
                         <span class="fixed ml-52"
                             ><img
@@ -54,22 +57,27 @@
                         /></span>
                     </div>
                     <div class="flex justify-center">
-                        <span
+                        <!--  <span
                             class="text-sm absolute text-red-700 text-center"
                             v-if="v$.email.$error"
                             >{{ v$.password.$errors[0].$message }}
-                        </span>
+                        </span> -->
                     </div>
                 </div>
             </div>
 
-            <router-link
+            <button
                 class="bg-slate-800 mt-6 text-center rounded-2xl w-48 py-2 text-white font-bold hover:bg-slate-700"
-                to=/Home
-                @click="submitForm"
-                >Ingresar
-            </router-link>
+                type="submit"
+            >
+                Ingresar
+            </button>
 
+            <router-link
+                class="text-center text-sm text-gray-600 mt-2 hover:text-gray-400"
+                to="/Create"
+                >Registrarse
+            </router-link>
             <router-link
                 class="text-center text-sm text-gray-600 mt-2 hover:text-gray-400"
                 to="/Home"
@@ -83,24 +91,44 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
+import axios from "axios";
 
-//Validacion de Forrmulario
+//Validacion de Formulario
 export default {
     name: "Form",
-    components: {},
-    setup() {
-        const state = reactive({
-            email: "",
-            password: {
+    data() {
+        return {
+            user: {
+                email: "",
                 password: "",
             },
+        };
+    },
+    components: {},
+    methods: {
+        submitUser() {
+            axios
+                .post("/Login", this.user)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                });
+        },
+    },
+    /*  setup() {
+        const state = reactive({
+            email: "",
+            password: "",
         });
 
         const rules = computed(() => {
             return {
                 email: { required, email },
                 password: {
-                    password: { required, minLength: minLength(6) },
+                    required,
+                    minLength: minLength(6),
                 },
             };
         });
@@ -111,11 +139,6 @@ export default {
             state,
             v$,
         };
-    },
-    methods: {
-        submitForm() {
-            this.v$.$validate();
-        },
-    },
+    }, */
 };
 </script>
