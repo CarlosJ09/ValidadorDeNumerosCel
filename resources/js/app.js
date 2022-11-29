@@ -7,6 +7,7 @@ import Create from "../views/Create.vue";
 import Form from "../views/Form.vue";
 import Validacion from "../views/Validacion.vue";
 import Reportes from "../views/Reportes.vue";
+import ReportView from "./components/ReportView.vue";
 
 
 const routes = [
@@ -15,6 +16,7 @@ const routes = [
     { path: "/Create", component: Create },
     { path: "/Validacion", component: Validacion },
     { path: "/Reportes", component: Reportes },
+    { path: "/Reportes/ReportView", component: ReportView },
 
 ];
 

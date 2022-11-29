@@ -49,8 +49,8 @@
                             <th class="px-16">Cliente</th>
                             <th class="px-16">Usuario</th>
                             <th class="px-16">Fecha</th>
-                            <th class="px-16">Validos</th>
                             <th class="px-16">Invalidos</th>
+                            <th class="px-16">Validado</th>
                             <th class="px-16">Total</th>
                             <th class="px-16">Acciones</th>
                         </tr>
@@ -64,14 +64,14 @@
                                 {{ report.Name }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                {{ report.email }}
+                                {{ report.Email }}
                             </td>
                             <td class="border-x-2 border-gray-700">8/7/2002</td>
                             <td class="border-x-2 border-gray-700">
-                                {{ report.NumeroValido }}
+                                {{ report.Phone }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                {{ report.Phone }}
+                                {{ report.NumeroValido }}
                             </td>
                             <td class="border-x-2 border-gray-700">
                                 {{ report.Phone }}

@@ -9,7 +9,7 @@
                     <li
                         class="mr-2 font-bold hover:text-gray-700 hover:cursor-pointer"
                     >
-                        User_name
+                        {{ user.name }}
                         <ul
                             class="hidden text-black bg-white text-center absolute p-4 border-black border"
                         >
@@ -45,7 +45,7 @@ export default {
         axios
             .get("/Register")
             .then((response) => {
-                this.user = response.data;
+                this.user = response.data[0];
                 console.log(response.data);
             })
             .catch((error) => {

@@ -36,6 +36,10 @@ Route::get('/Reportes', function () {
     return view('welcome');
 })->middleware('auth')->name('Reportes');
 
+Route::get('/Reportes/ReportView', function () {
+    return view('welcome');
+})->middleware('auth')->name('Reportes');
+
 Route::post('/Validacion', function () {
     return view('welcome');
 })->middleware('auth');

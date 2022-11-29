@@ -12,10 +12,10 @@
         >
             <div
                 v-for="report in data"
-                class="flex gap-4 justify-between w-11/12 bg-sky-600 px-4 py-8 rounded-lg mt-4 text-white"
+                class="flex flex-wrap text-center gap-4 justify-between w-11/12 bg-sky-600 px-4 py-8 rounded-lg mt-4 text-white hover:bg-sky-800"
             >
                 <div class="font-bold text-xl">
-                   <a href=""><h1>{{ report.report_name }}</h1></a>
+                   <router-link to="/Reportes/ReportView"><h1 class="hover:text-gray-200">{{ report.report_name }}</h1></router-link>
                 </div>
                 <div class="flex gap-2">
                     <p class="font-bold">Cantidad de numeros validados:</p>
