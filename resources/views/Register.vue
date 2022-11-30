@@ -132,9 +132,10 @@
 
 <script>
 import axios from "axios";
-//Validacion de Forrmulario
+
+//Validacion de Formulario
 export default {
-    name: "Create",
+    name: "Register",
     components: {},
     data() {
         return {

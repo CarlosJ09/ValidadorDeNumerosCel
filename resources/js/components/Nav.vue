@@ -1,3 +1,14 @@
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const logout = () => {
+    localStorage.removeItem("token");
+    router.push("/");
+};
+</script>
+
 <template>
     <div
         class="nav bg-white fixed w-full flex items-center justify-between px-8 border-slate-500 border-b-2"
@@ -9,13 +20,15 @@
                     <li
                         class="mr-2 font-bold hover:text-gray-700 hover:cursor-pointer"
                     >
-                        {{ user.name }}
+                        {{ user.name }} <p v-if="!user.email">User_Name</p> 
                         <ul
                             class="hidden text-black bg-white text-center absolute p-4 border-black border"
                         >
                             <li class="hover:text-gray-700">Usuario</li>
                             <li class="hover:text-gray-700">
-                                <a href="/logout">Logout</a>
+                                <button href="/logout" @click="logout">
+                                    Logout
+                                </button>
                             </li>
                             <li class="hover:text-gray-700">Settings</li>
                         </ul>
@@ -43,10 +56,9 @@ export default {
     },
     created() {
         axios
-            .get("/Register")
+            .get("api/index")
             .then((response) => {
-                this.user = response.data[0];
-                console.log(response.data);
+                this.user = response.data;
             })
             .catch((error) => {
                 console.log(error.response);
