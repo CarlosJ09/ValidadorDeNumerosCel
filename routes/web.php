@@ -16,13 +16,16 @@ use App\Http\Controllers\UserController;
 |
 */
 
+//Login y Registro
 Route::get('/', function () {
     return view('welcome');
 })->name('LogIn');
 
-Route::get('/Create', function () {
+Route::get('/Register', function () {
     return view('welcome');
-})->name('register');
+})->name('Register');
+
+/* Requieren Validacion */
 
 Route::get('/Home', function () {
     return view('welcome');
@@ -36,24 +39,21 @@ Route::get('/Reportes', function () {
     return view('welcome');
 })->middleware('auth')->name('Reportes');
 
+Route::get('/Reportes/ReportView', function () {
+    return view('welcome');
+})->middleware('auth')->name('Reportes');
+
 Route::post('/Validacion', function () {
     return view('welcome');
 })->middleware('auth');
-
-
-Route::resource('/Register', UserController::class);
 
 Route::resource('/Reports', ReportController::class);
 
 Route::resource('/Clients', ClientController::class);
 
 
-/* Login, Register and Logout*/
-Route::post('/Register', [UserController::class, 'register'])->name('register');
 
-Route::post('/Login', [UserController::class, 'login'])->name('login');
 
-Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 
 

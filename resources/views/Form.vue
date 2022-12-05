@@ -1,3 +1,31 @@
+<script setup>
+import { reactive, ref } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+//Validacion de Formulario
+
+let form = reactive({
+    email: "",
+    password: "",
+});
+
+let error = ref("");
+
+const login = async () => {
+    await axios.post("api/login", form).then((response) => {
+        if (response.data.success) {
+            localStorage.setItem("token", response.data.data.token);
+            router.push("/Home");
+        } else {
+            error.value = response.data.message;
+        }
+    });
+};
+</script>
+
 <template>
     <div
         class="flex flex-col justify-center items-center bg-sky-600 w-screen h-screen"
@@ -11,17 +39,15 @@
         </div>
         <form
             class="flex flex-col justify-center items-center bg-white border-4 rounded-2xl border-gray-600 py-10 pb-8 px-24"
-            method="POST"
-            v-on:submit.prevent="submitUser()"
-            action="{{route('login')}}"
+            @submit.prevent="login"
         >
             <div class="flex items-center mt-8">
                 <input
-                    type="text"
+                    type="email"
                     class="border-2 rounded-xl border-gray-700 p-2 w-64"
                     name="login"
                     placeholder="Usuario"
-                    v-model="user.email"
+                    v-model="form.email"
                     required
                 />
                 <span class="fixed" style="margin-left: 210px"
@@ -32,11 +58,9 @@
                 /></span>
             </div>
             <div class="flex justify-center text-center">
-                <!-- <span
-                    class="text-sm absolute text-red-700"
-                    v-if="v$.email.$error"
-                    >{{ v$.email.$errors[0].$message }}</span
-                > -->
+                <span class="text-sm absolute text-red-700" v-if="error">{{
+                    error
+                }}</span>
             </div>
             <div class="flex my-2 items-center mt-6">
                 <div>
@@ -46,7 +70,7 @@
                             class="border-2 rounded-xl border-gray-700 p-2 w-64"
                             name="login"
                             placeholder="Contraseña"
-                            v-model="user.password"
+                            v-model="form.password"
                             required
                         />
                         <span class="fixed ml-52"
@@ -57,25 +81,24 @@
                         /></span>
                     </div>
                     <div class="flex justify-center">
-                        <!--  <span
+                        <span
                             class="text-sm absolute text-red-700 text-center"
-                            v-if="v$.email.$error"
-                            >{{ v$.password.$errors[0].$message }}
-                        </span> -->
+                            v-if="error"
+                            >{{ error }}
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <button
-                class="bg-slate-800 mt-6 text-center rounded-2xl w-48 py-2 text-white font-bold hover:bg-slate-700"
+            <input
+                class="bg-slate-800 mt-6 text-center rounded-2xl w-48 py-2 text-white font-bold hover:bg-slate-700 cursor-pointer"
                 type="submit"
-            >
-                Ingresar
-            </button>
+                value="Ingresar"
+            />
 
             <router-link
                 class="text-center text-sm text-gray-600 mt-2 hover:text-gray-400"
-                to="/Create"
+                to="/Register"
                 >Registrarse
             </router-link>
             <router-link
@@ -86,59 +109,3 @@
         </form>
     </div>
 </template>
-
-<script>
-import { useVuelidate } from "@vuelidate/core";
-import { required, email, minLength } from "@vuelidate/validators";
-import { reactive, computed } from "vue";
-import axios from "axios";
-
-//Validacion de Formulario
-export default {
-    name: "Form",
-    data() {
-        return {
-            user: {
-                email: "",
-                password: "",
-            },
-        };
-    },
-    components: {},
-    methods: {
-        submitUser() {
-            axios
-                .post("/Login", this.user)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error.response);
-                });
-        },
-    },
-    /*  setup() {
-        const state = reactive({
-            email: "",
-            password: "",
-        });
-
-        const rules = computed(() => {
-            return {
-                email: { required, email },
-                password: {
-                    required,
-                    minLength: minLength(6),
-                },
-            };
-        });
-
-        const v$ = useVuelidate(rules, state);
-
-        return {
-            state,
-            v$,
-        };
-    }, */
-};
-</script>
