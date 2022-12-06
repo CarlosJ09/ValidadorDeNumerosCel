@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div>
+            <Nav />
+        </div>
         <div class="flex h-screen w-full py-4 overflow-y-hidden">
             <div>
                 <sideBar />
@@ -101,6 +104,7 @@
 </template>
 
 <script>
+import Nav from "../js/components/Nav.vue";
 import sideBar from "../js/components/sideBar.vue";
 import ValiRapida from "../js/components/valiRapida.vue";
 import ValiMasiva from "../js/components/ValiMasiva.vue";
@@ -108,6 +112,7 @@ import ValiMasiva from "../js/components/ValiMasiva.vue";
 export default {
     name: "Validacion",
     components: {
+        Nav,
         sideBar,
         ValiRapida,
         ValiMasiva,

@@ -26,7 +26,7 @@
                                 {{ report.Name }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                {{ report.email }}
+                                {{ report.Email }}
                             </td>
                             <td class="border-x-2 border-gray-700">8/7/2002</td>
                             <td class="border-x-2 border-gray-700">

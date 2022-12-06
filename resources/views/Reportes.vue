@@ -1,4 +1,7 @@
 <template>
+    <div>
+        <Nav />
+    </div>
     <div class="menu0 flex h-screen w-full py-4">
         <div>
             <sideBar />

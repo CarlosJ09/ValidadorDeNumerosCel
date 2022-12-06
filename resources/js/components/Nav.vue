@@ -11,7 +11,7 @@ const logout = () => {
 
 <template>
     <div
-        class="form bg-white fixed w-full flex items-center justify-between px-8 border-slate-500 border-b-2"
+        class="bg-white fixed w-full flex items-center justify-between px-8 border-slate-500 border-b-2"
     >
         <img class="w-44 h-auto" src="../../assets/sendIU.png" alt="" />
         <div class="flex items-center">

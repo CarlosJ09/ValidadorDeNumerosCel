@@ -81,7 +81,7 @@
                             class="border-2 rounded-xl border-gray-700 p-2 w-64"
                             name="login"
                             placeholder="Confirmar Contraseña"
-                            v-model="user.confirmPassword"
+                            v-model="user.c_password"
                             required
                         />
                         <span class="fixed ml-52"
@@ -143,7 +143,7 @@ export default {
                 name: "",
                 email: "",
                 password: "",
-                confirmPassword: "",
+                c_password: "",
                 company: "",
             },
         };
@@ -151,7 +151,7 @@ export default {
     methods: {
         submitUser() {
             axios
-                .post("/Register", this.user)
+                .post("api/register", this.user)
                 .then((response) => {
                     console.log(response);
                 })

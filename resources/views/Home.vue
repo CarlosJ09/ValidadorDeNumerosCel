@@ -1,12 +1,15 @@
 <template>
+    <div>
+        <Nav v-once />
+    </div>
     <div class="menu0 flex h-screen w-full py-4">
         <div>
             <sideBar />
         </div>
         <div
             style="
-                margin-left: 20%; 
-                margin-top: 74px;
+                margin-left: 20%;
+                margin-top: 74px; 
                 background-color: #e9e9e9;
             "
             class="dashBoard flex flex-col w-4/5 h-max"
@@ -38,7 +41,7 @@
                                 {{ report.Name }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                {{ report.email }}
+                                {{ report.Email }}
                             </td>
                             <td class="border-x-2 border-gray-700">8/7/2002</td>
                             <td class="border-x-2 border-gray-700">
@@ -61,13 +64,15 @@
 
 <script>
 import sideBar from "../js/components/sideBar.vue";
-import Graphs from "../js/components/Graphs.vue"
+import Graphs from "../js/components/Graphs.vue";
+import Nav from "../js/components/Nav.vue";
 
 import "../css/app.css";
 
 export default {
     name: "Home",
     components: {
+        Nav,
         sideBar,
         Graphs,
     },
