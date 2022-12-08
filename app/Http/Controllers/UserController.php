@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         $user = User::all();
-                        
+
         return response()->json($user);
     }
     public function register(Request $request)
@@ -24,7 +24,7 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->company = $request->input('company', 'N/A');
-        $user->remember_token = $request->input('confirmPassword');
+        $user->remember_token = $request->input('confirm');
 
         $user->save();
 

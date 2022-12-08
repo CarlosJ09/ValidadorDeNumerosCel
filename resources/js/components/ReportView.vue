@@ -28,16 +28,15 @@
                             <td class="border-x-2 border-gray-700">
                                 {{ report.Email }}
                             </td>
-                            <td class="border-x-2 border-gray-700">8/7/2002</td>
                             <td class="border-x-2 border-gray-700">
                                 {{ report.Phone }}
                             </td>
                             <td class="border-x-2 border-gray-700">
                                 {{ report.NumeroValido }}
                             </td>
-                            <!-- <td class="border-x-2 border-gray-700">
+                            <td class="border-x-2 border-gray-700">
                                 {{ data.cant_val }}
-                            </td> -->
+                            </td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Nav v-once />
+        <Nav />
     </div>
     <div class="menu0 flex h-screen w-full py-4">
         <div>
@@ -9,14 +9,14 @@
         <div
             style="
                 margin-left: 20%;
-                margin-top: 74px; 
+                margin-top: 74px;
                 background-color: #e9e9e9;
             "
             class="dashBoard flex flex-col w-4/5 h-max"
         >
             <h1 class="p-6 font-bold text-2xl">DashBoard</h1>
             <!-- Componente de Graficos -->
-            <Graphs />
+            <Charts />
             <div class="flex justify-center mt-10 pb-12">
                 <table class="text-center rounded-md bg-white">
                     <thead class="border-2">
@@ -27,9 +27,8 @@
                             <th class="px-16">Usuario</th>
                             <th class="px-16">Fecha</th>
                             <th class="px-16">Invalidos</th>
-                            <th class="px-16">Validado</th>
+                            <th class="px-16">Validados</th>
                             <th class="px-16">Total</th>
-                            <th class="px-16">Acciones</th>
                         </tr>
                     </thead>
                     <tbody
@@ -53,7 +52,6 @@
                             <td class="border-x-2 border-gray-700">
                                 {{ report.Phone }}
                             </td>
-                            <td class="border-x-2 border-gray-700">Acciones</td>
                         </tr>
                     </tbody>
                 </table>
@@ -64,7 +62,7 @@
 
 <script>
 import sideBar from "../js/components/sideBar.vue";
-import Graphs from "../js/components/Graphs.vue";
+import Charts from "../js/components/Charts.vue";
 import Nav from "../js/components/Nav.vue";
 
 import "../css/app.css";
@@ -74,7 +72,7 @@ export default {
     components: {
         Nav,
         sideBar,
-        Graphs,
+        Charts,
     },
     props: {
         message: String,

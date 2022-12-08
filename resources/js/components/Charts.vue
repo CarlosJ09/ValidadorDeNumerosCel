@@ -5,7 +5,7 @@
                 <canvas id="myChart"></canvas>
             </div>
             <p class="text-gray-800 mt-2">Total de No. Validados</p>
-            <p class="text-gray-800">1,992.34</p>
+            <p class="text-gray-800">{{ reports.cant_val }}</p>
         </div>
 
         <div class="flex flex-col justify-center items-center">
@@ -13,7 +13,7 @@
                 <canvas id="myChart2"></canvas>
             </div>
             <p class="text-gray-800 mt-2">Total de No. Validados</p>
-            <p class="text-gray-800">1,992.34</p>
+            <p class="text-gray-800">{{ reports.cant_val }}</p>
         </div>
 
         <div class="flex flex-col justify-center items-center">
@@ -21,7 +21,7 @@
                 <canvas id="myChart3"></canvas>
             </div>
             <p class="text-gray-800 mt-2">Total de No. Invalidados</p>
-            <p class="text-gray-800">1,992.34</p>
+            <p class="text-gray-800">{{ reports.cant_val }}</p>
         </div>
     </div>
 </template>
@@ -31,29 +31,24 @@ import Chart from "chart.js/auto";
 
 export default {
     name: "Graphs",
-    components: {
-    },
+    components: {},
     mounted() {
         const ctx = document.getElementById("myChart");
         const myChart = new Chart(ctx, {
             type: "polarArea",
             data: {
                 labels: [
-                    "Caracteres invalidos",
-                    "Validos",
-                    "Cantidad de numeros invalida",
-                    "Otros",
+                    "Total de Telefonos",
+                    "Telefonos Validados",
+                    "Numeros Invalidos",
                 ],
                 datasets: [
                     {
                         label: "# of Votes",
-                        data: [122, 200, 13, 50, 200, 300],
+                        data: [452, 400, 250],
                         backgroundColor: [
-                            "rgb(255, 99, 132)",
-                            "rgb(54, 162, 235)",
-                            "rgb(255, 205, 86)",
-                            "rgb(75, 192, 192)",
                             "rgb(153, 102, 255)",
+                            "rgb(54, 162, 235)",
                             "rgb(255, 159, 64)",
                         ],
                         borderWidth: 1,
@@ -74,7 +69,12 @@ export default {
         const myChart2 = new Chart(ctx2, {
             type: "doughnut",
             data: {
-                labels: ["Red", "Blue", "Yellow", "Black"],
+                labels: [
+                    "Total de Telefonos",
+                    "Telefonos Validados",
+                    "Numeros Invalidos",
+                    "Otros",
+                ],
                 datasets: [
                     {
                         label: "My First Dataset",
@@ -97,20 +97,18 @@ export default {
             type: "pie",
             data: {
                 labels: [
-                    "Caracteres invalidos",
-                    "Validos",
-                    "Cantidad de numeros invalida",
-                    "Otros",
+                    "Total de Telefonos",
+                    "Telefonos Validados",
+                    "Numeros Invalidos",
                 ],
                 datasets: [
                     {
                         label: "My First Dataset",
-                        data: [300, 50, 100, 40],
+                        data: [300, 50, 100],
                         backgroundColor: [
                             "rgb(75, 192, 192)",
                             "rgb(255, 99, 132)",
                             "rgb(255, 205, 86)",
-                            "rgb(0, 0, 0)",
                         ],
                         hoverOffset: 4,
                     },
@@ -126,5 +124,21 @@ export default {
         });
         myChart3;
     },
-}
+    data() {
+        return {
+            reports: [],
+            nombre: [],
+        };
+    },
+    created() {
+        axios
+            .get("/Reports")
+            .then((response) => {
+                this.reports = response.data[0];
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+    },
+};
 </script>

@@ -1,4 +1,4 @@
-<script setup> 
+<script setup>
 import { reactive, ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -7,7 +7,7 @@ const router = useRouter();
 
 //Validacion de Formulario
 
-let form = reactive({
+const state = reactive({
     email: "",
     password: "",
 });
@@ -15,12 +15,12 @@ let form = reactive({
 let error = ref("");
 
 const login = async () => {
-    await axios.post("api/login", form).then((response) => {
+    await axios.post("api/login", state).then((response) => {
         if (response.data.success) {
             localStorage.setItem("token", response.data.data.token);
             router.push("/Home");
         } else {
-            error.value = response.data.message;
+            error.value = "Credenciales Incorrectas";
         }
     });
 };
@@ -47,8 +47,7 @@ const login = async () => {
                     class="border-2 rounded-xl border-gray-700 p-2 w-64"
                     name="login"
                     placeholder="Usuario"
-                    v-model="form.email"
-                    required
+                    v-model="state.email"
                 />
                 <span class="fixed" style="margin-left: 210px"
                     ><img
@@ -58,9 +57,9 @@ const login = async () => {
                 /></span>
             </div>
             <div class="flex justify-center text-center">
-                <span class="text-sm absolute text-red-700" v-if="error">{{
-                    error
-                }}</span>
+                <span class="text-sm absolute text-red-700" v-if="error">
+                    {{ error }}
+                </span>
             </div>
             <div class="flex my-2 items-center mt-6">
                 <div>
@@ -70,8 +69,7 @@ const login = async () => {
                             class="border-2 rounded-xl border-gray-700 p-2 w-64"
                             name="login"
                             placeholder="Contraseña"
-                            v-model="form.password"
-                            required
+                            v-model="state.password"
                         />
                         <span class="fixed ml-52"
                             ><img
@@ -84,7 +82,8 @@ const login = async () => {
                         <span
                             class="text-sm absolute text-red-700 text-center"
                             v-if="error"
-                            >{{ error }}
+                        >
+                            {{ error }}
                         </span>
                     </div>
                 </div>

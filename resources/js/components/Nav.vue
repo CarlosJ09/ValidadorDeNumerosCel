@@ -21,7 +21,7 @@ const logout = () => {
                         class="mr-2 font-bold hover:text-gray-700 hover:cursor-pointer"
                     >
                         {{ user.name }}
-                        <p v-if="!user.email">User_Name</p>
+                        <p v-show="!user.email">User_Name</p>
                         <ul
                             class="hidden text-black bg-white text-center absolute p-4 border-black border"
                         >

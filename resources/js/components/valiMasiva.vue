@@ -208,7 +208,6 @@ export default {
             },
         };
     },
-    props: {},
     methods: {
         //Subir archivo
         handleFileUpload(event) {

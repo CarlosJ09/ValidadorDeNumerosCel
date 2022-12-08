@@ -18,9 +18,9 @@
                 <input
                     type="text"
                     class="border-2 rounded-xl border-gray-700 p-2 w-64"
-                    name="login"
+                    name="name"
                     placeholder="Usuario"
-                    v-model="user.name"
+                    v-model="state.name"
                     required
                 />
                 <span class="fixed" style="margin-left: 210px"
@@ -35,11 +35,11 @@
                 <div>
                     <div class="flex items-center">
                         <input
-                            type="email"
+                            type="text"
                             class="border-2 rounded-xl border-gray-700 p-2 w-64"
-                            name="login"
+                            name="email"
                             placeholder="Email"
-                            v-model="user.email"
+                            v-model="state.email"
                             required
                         />
                         <span class="fixed ml-52"
@@ -51,6 +51,14 @@
                     </div>
                 </div>
             </div>
+            <div class="flex justify-center text-center">
+                <span
+                    class="text-sm absolute text-red-700"
+                    v-if="v$.email.$error"
+                >
+                    Favor introducir un email valido
+                </span>
+            </div>
 
             <div class="flex my-2 items-center mt-6">
                 <div>
@@ -58,9 +66,9 @@
                         <input
                             type="password"
                             class="border-2 rounded-xl border-gray-700 p-2 w-64"
-                            name="login"
+                            name="password"
                             placeholder="Contraseña"
-                            v-model="user.password"
+                            v-model="state.password"
                             required
                         />
                         <span class="fixed ml-52"
@@ -72,6 +80,14 @@
                     </div>
                 </div>
             </div>
+            <div class="flex justify-center text-center">
+                <span
+                    class="text-sm absolute text-red-700"
+                    v-if="v$.password.$error"
+                >
+                    Favor introducir una contraseña valida
+                </span>
+            </div>
 
             <div class="flex my-2 items-center mt-6">
                 <div>
@@ -79,9 +95,9 @@
                         <input
                             type="password"
                             class="border-2 rounded-xl border-gray-700 p-2 w-64"
-                            name="login"
+                            name="company"
                             placeholder="Confirmar Contraseña"
-                            v-model="user.c_password"
+                            v-model="state.confirm"
                             required
                         />
                         <span class="fixed ml-52"
@@ -92,6 +108,14 @@
                         /></span>
                     </div>
                 </div>
+            </div>
+            <div class="flex justify-center text-center">
+                <span
+                    class="text-sm absolute text-red-700"
+                    v-if="v$.confirm.$error"
+                >
+                    Las contraseñas deben ser iguales
+                </span>
             </div>
 
             <div class="flex my-2 items-center mt-6">
@@ -100,9 +124,9 @@
                         <input
                             type="text"
                             class="border-2 rounded-xl border-gray-700 p-2 w-64"
-                            name="login"
-                            placeholder="Compañia"
-                            v-model="user.company"
+                            name="confirmPassword"
+                            placeholder="Compañia (Opcional)"
+                            v-model="state.company"
                             required
                         />
                         <span class="fixed ml-52"
@@ -132,32 +156,52 @@
 
 <script>
 import axios from "axios";
+import { useVuelidate } from "@vuelidate/core";
+import { required, email, sameAs, minLength } from "@vuelidate/validators";
+import { reactive } from "vue";
 
 //Validacion de Formulario
 export default {
     name: "Register",
     components: {},
-    data() {
-        return {
-            user: {
-                name: "",
-                email: "",
-                password: "",
-                c_password: "",
-                company: "",
+    setup() {
+        const state = reactive({
+            name: "",
+            email: "",
+            password: "",
+            confirm: "",
+            company: "",
+        });
+        const rules = {
+            name: { required },
+            email: { required, email },
+            password: { required, minLength: minLength(6) },
+            confirm: {
+                required,
+                minLength: minLength(6),
+                /* sameAs: sameAs(state.password), */
             },
         };
+
+        const v$ = useVuelidate(rules, state);
+
+        return { state, v$ };
     },
     methods: {
         submitUser() {
-            axios
-                .post("api/register", this.user)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error.response);
-                });
+            this.v$.$validate();
+            if (!this.v$.$error) {
+                axios
+                    .post("api/register", this.state)
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error.response);
+                    });
+            } else {
+                console.log(this.v$.$errors);
+            }
         },
     },
 };
