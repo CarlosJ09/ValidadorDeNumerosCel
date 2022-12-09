@@ -20,10 +20,10 @@
                 class="flex flex-wrap text-center gap-4 justify-between w-11/12 bg-sky-600 px-4 py-8 rounded-lg mt-4 text-white hover:bg-sky-800"
             >
                 <div class="font-bold text-xl">
-                    <router-link to="/Reportes/ReportView"
+                    <a href="/reportes/individual"
                         ><h1 class="hover:text-gray-200">
                             {{ report.report_name }}
-                        </h1></router-link
+                        </h1></a
                     >
                 </div>
                 <div class="flex gap-2">
@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import Nav from "../js/components/Nav.vue";
-import sideBar from "../js/components/sideBar.vue";
+import Nav from "../components/Nav.vue";
+import sideBar from "../components/sideBar.vue";
 
 export default {
     name: "Reportes",

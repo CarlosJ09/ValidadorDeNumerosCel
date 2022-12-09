@@ -104,10 +104,10 @@
 </template>
 
 <script>
-import Nav from "../js/components/Nav.vue";
-import sideBar from "../js/components/sideBar.vue";
-import ValiRapida from "../js/components/valiRapida.vue";
-import ValiMasiva from "../js/components/ValiMasiva.vue";
+import Nav from "../components/Nav.vue";
+import sideBar from "../components/sideBar.vue";
+import ValiRapida from "../components/ValiRapida.vue";
+import ValiMasiva from "../components/valiMasiva.vue";
 
 export default {
     name: "Validacion",

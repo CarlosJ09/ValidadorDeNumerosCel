@@ -1,12 +1,5 @@
 <script setup>
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-const logout = () => {
-    localStorage.removeItem("token");
-    router.push("/");
-};
+import DropdownLink from "@/Components/DropdownLink.vue";
 </script>
 
 <template>
@@ -25,13 +18,43 @@ const logout = () => {
                         <ul
                             class="hidden text-black bg-white text-center absolute p-4 border-black border"
                         >
-                            <li class="hover:text-gray-500">Usuario</li>
                             <li class="hover:text-gray-500">
-                                <button href="/logout" @click="logout">
-                                    Logout
-                                </button>
+                                <DropdownLink
+                                    :href="route('logout')"
+                                    method="post"
+                                    as="button"
+                                >
+                                    User
+                                </DropdownLink>
                             </li>
-                            <li class="hover:text-gray-500">Settings</li>
+                            <li class="hover:text-gray-500">
+                                <DropdownLink
+                                    :href="route('logout')"
+                                    method="post"
+                                    as="button"
+                                >
+                                    Log Out
+                                </DropdownLink>
+                            </li>
+                            <li class="hover:text-gray-500">
+                                <DropdownLink
+                                    :href="route('administrador')"
+                                    method="get"
+                                    as="button"
+                                >
+                                    Admin
+                                </DropdownLink>
+                            </li>
+
+                            <li class="hover:text-gray-500">
+                                <DropdownLink
+                                    :href="route('logout')"
+                                    method="post"
+                                    as="button"
+                                >
+                                    Settings
+                                </DropdownLink>
+                            </li>
                         </ul>
                     </li>
                 </ul>

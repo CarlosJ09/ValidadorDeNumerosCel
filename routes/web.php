@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\UserController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,45 +17,52 @@ use App\Http\Controllers\UserController;
 |
 */
 
-//Login y Registro
 Route::get('/', function () {
-    return view('welcome');
-})->name('LogIn');
+    return Inertia::render('Login', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('home');
 
-Route::get('/Register', function () {
-    return view('welcome');
-})->name('Register');
+/* Pages */
+Route::get('/dashboard', function () {
+    return Inertia::render('Home');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-/* Requieren Validacion */
+Route::get('/validacion', function () {
+    return Inertia::render('Validacion');
+})->middleware(['auth', 'verified'])->name('validacion');
 
-Route::get('/Home', function () {
-    return view('welcome');
-})->middleware('auth')->name('Home');
+Route::get('/reportes', function () {
+    return Inertia::render('Reportes');
+})->middleware(['auth', 'verified'])->name('reportes');
 
-Route::get('/Validacion', function () {
-    return view('welcome');
-})->middleware('auth')->name('Validacion');
+Route::get('/reportes/individual', function () {
+    return Inertia::render('ReportView');
+})->middleware(['auth', 'verified'])->name('individual');
 
-Route::get('/Reportes', function () {
-    return view('welcome');
-})->middleware('auth')->name('Reportes');
+Route::get('/administrador', function () {
+    return Inertia::render('Admin');
+})->middleware(['auth', 'verified'])->name('administrador');
 
-Route::get('/Reportes/ReportView', function () {
-    return view('welcome');
-})->middleware('auth')->name('Reportes');
+require __DIR__ . '/auth.php';
 
-Route::post('/Validacion', function () {
-    return view('welcome');
-})->middleware('auth');
+/* Group */
+Route::group(
+    [
+        'namespace' => 'App\Http\Controllers\Admin',
+        'prefix' => 'admin',
+        'middleware' => ['auth'],
+    ],
+
+    function () {
+        Route::resource('user', 'UserController');
+        Route::resource('role', 'RoleController');
+        Route::resource('permission', 'PermissionController');
+    }
+);
 
 Route::resource('/Reports', ReportController::class);
-
 Route::resource('/Clients', ClientController::class);
-
-
-
-
-
-
-
-
