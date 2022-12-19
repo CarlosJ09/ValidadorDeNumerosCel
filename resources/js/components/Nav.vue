@@ -1,5 +1,16 @@
 <script setup>
 import DropdownLink from "@/Components/DropdownLink.vue";
+
+const props = defineProps({
+    roles: {
+        type: Object,
+        default: () => ({}),
+    },
+    can: {
+        type: Object,
+        default: () => ({}),
+    },
+});
 </script>
 
 <template>
@@ -9,7 +20,7 @@ import DropdownLink from "@/Components/DropdownLink.vue";
         <img class="w-44 h-auto" src="../../assets/sendIU.png" alt="" />
         <div class="flex items-center">
             <div class="menu">
-                <ul>
+                <ul class="mr-2">
                     <li
                         class="mr-2 font-bold hover:text-gray-700 hover:cursor-pointer"
                     >
@@ -36,7 +47,13 @@ import DropdownLink from "@/Components/DropdownLink.vue";
                                     Log Out
                                 </DropdownLink>
                             </li>
-                            <li class="hover:text-gray-500">
+                            <li
+                                class="hover:text-gray-500"
+                                v-if="
+                                    user.name == 'Super Admin' ||
+                                    user.name == 'Admin User'
+                                "
+                            >
                                 <DropdownLink
                                     :href="route('administrador')"
                                     method="get"

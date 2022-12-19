@@ -68,7 +68,7 @@ export default {
         axios
             .get("/Reports")
             .then((response) => {
-                this.reports = JSON.parse(response.data[0].json);
+                this.reports = JSON.parse(response.data[response.data.length - 1].json);
             })
             .catch((error) => {
                 console.log(error.response);

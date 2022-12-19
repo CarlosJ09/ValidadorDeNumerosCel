@@ -1,6 +1,9 @@
 <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
+
 const props = defineProps({
     users: {
         type: Object,
@@ -11,13 +14,22 @@ const props = defineProps({
         default: () => ({}),
     },
 });
+
+const createUser = () => {
+    Inertia.get(route("user.create"))
+}
+
+const deleteUser = (id) => {
+    Inertia.delete(route("user.destroy", id));
+};
+
 </script>
 <template>
     <Head title="Users" />
     <BreezeAuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Users
+                Usuarios
             </h2>
         </template>
         <div class="py-12">
@@ -34,16 +46,16 @@ const props = defineProps({
                             class="flex space-x-2 items-center"
                             v-if="can.create"
                         >
-                            <a
-                                href="#"
-                                class="px-4 py-2 bg-green-500 uppercase text-white rounded focus:outline-none flex items-center"
+                            <button
+                                @click="createUser"
+                                class="px-4 py-2 bg-sky-500 uppercase text-white rounded focus:outline-none flex items-center"
                                 ><span
                                     class="iconify mr-1"
                                     data-icon="gridicons:create"
                                     data-inline="false"
                                 ></span>
-                                Create User</a
-                            >
+                                Crear Usuario
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -57,14 +69,14 @@ const props = defineProps({
                             class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
                         >
                             <tr>
-                                <th scope="col" class="py-3 px-6">Name</th>
+                                <th scope="col" class="py-3 px-6">Nombre</th>
                                 <th scope="col" class="py-3 px-6">Email</th>
                                 <th
                                     v-if="can.edit || can.delete"
                                     scope="col"
                                     class="py-3 px-6"
                                 >
-                                    Actions
+                                    Acciones
                                 </th>
                             </tr>
                         </thead>
@@ -88,18 +100,20 @@ const props = defineProps({
                                         type="justify-start lg:justify-end"
                                         no-wrap
                                     >
-                                        <BreezeButton
+                                        <Link
                                             class="ml-4 bg-green-500 px-2 py-1 rounded text-white cursor-pointer"
                                             v-if="can.edit"
+                                            :href="route('user.edit', user.id)"
                                         >
-                                            Edit
-                                        </BreezeButton>
-                                        <BreezeButton
+                                            Editar
+                                        </Link>
+                                        <button
                                             class="ml-4 bg-red-500 px-2 py-1 rounded text-white cursor-pointer"
                                             v-if="can.delete"
+                                            v-on:click="deleteUser(user.id)"
                                         >
-                                            Delete
-                                        </BreezeButton>
+                                            Eliminar
+                                        </button>
                                     </div>
                                 </td>
                             </tr>

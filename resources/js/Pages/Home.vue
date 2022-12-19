@@ -33,25 +33,22 @@
                     </thead>
                     <tbody
                         class="border-2 bg-white border-slate-900"
-                        v-for="report in reports.slice(0, 10)"
+                        v-for="client in clients.slice(0, 10)"
+                        :key="client.id"
                     >
                         <tr>
                             <td class="border-x-2 border-gray-700">
-                                {{ report.Name }}
+                                {{ client.name }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                {{ report.Email }}
-                            </td>
-                            <td class="border-x-2 border-gray-700">8/7/2002</td>
-                            <td class="border-x-2 border-gray-700">
-                                {{ report.Phone }}
+                                {{ client.email }}
                             </td>
                             <td class="border-x-2 border-gray-700">
-                                {{ report.NumeroValido }}
+                                {{ client.updated_at.slice(0,10) }}
                             </td>
-                            <td class="border-x-2 border-gray-700">
-                                {{ report.Phone }}
-                            </td>
+                            <td class="border-x-2 border-gray-700">46</td>
+                            <td class="border-x-2 border-gray-700">92</td>
+                            <td class="border-x-2 border-gray-700">138</td>
                         </tr>
                     </tbody>
                 </table>
@@ -74,19 +71,28 @@ export default {
         sideBar,
         Charts,
     },
-    props: {
-        message: String,
-    },
     data() {
         return {
             reports: [],
+            clients: [],
         };
     },
     created() {
         axios
             .get("/Reports")
             .then((response) => {
-                this.reports = JSON.parse(response.data[0].json);
+                this.reports = JSON.parse(
+                    response.data[response.data.length - 1].json
+                );
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+
+        axios
+            .get("/Clients", this.clients)
+            .then((response) => {
+                this.clients = response.data;
             })
             .catch((error) => {
                 console.log(error.response);

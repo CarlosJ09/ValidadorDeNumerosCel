@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
@@ -34,5 +39,62 @@ class UserController extends Controller
                 'delete' => Auth::user()->can('user delete'),
             ]
         ]);
+    }
+
+    public function create()
+    {
+        return inertia(component: 'Admin/User/Create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:' . User::class,
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        event(new Registered($user));
+
+        return redirect(route('user.index'));
+    }
+    /**
+     * Delete the user's account.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function edit(User $user)
+    {
+        return inertia('Admin/User/Edit', compact('user'));
+    }
+
+    public function update(User $user, Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+        ]);
+
+        $user->name = $request->name;
+
+        $user->email = $request->email;
+
+        $user->save();
+
+        return redirect()->route('user.index');
+    }
+
+    public function destroy(User $user)
+    {
+
+        $user->delete();
     }
 }

@@ -134,7 +134,7 @@ export default {
         axios
             .get("/Reports")
             .then((response) => {
-                this.reports = response.data[0];
+                this.reports = response.data[response.data.length - 1];
             })
             .catch((error) => {
                 console.log(error.response);

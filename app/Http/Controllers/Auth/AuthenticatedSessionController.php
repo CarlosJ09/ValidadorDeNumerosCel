@@ -31,6 +31,7 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
+
     public function store(LoginRequest $request)
     {
         $request->authenticate();

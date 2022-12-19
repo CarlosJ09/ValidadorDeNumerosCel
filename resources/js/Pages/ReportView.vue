@@ -14,7 +14,6 @@
                             <th class="px-16">Usuario</th>
                             <th class="px-16">Invalidos</th>
                             <th class="px-16">Validados</th>
-                            <th class="px-16">Total</th>
                         </tr>
                     </thead>
                     <tbody
@@ -33,9 +32,6 @@
                             </td>
                             <td class="border-x-2 border-gray-700">
                                 {{ report.NumeroValido }}
-                            </td>
-                            <td class="border-x-2 border-gray-700">
-                                {{ data.cant_val }}
                             </td>
                         </tr>
                     </tbody>
@@ -70,7 +66,7 @@ export default {
         axios
             .get("/Reports")
             .then((response) => {
-                this.reports = JSON.parse(response.data[0].json);
+                this.reports = JSON.parse(response.data[response.data.length - 1].json);
                 console.log(response.data)
             })
             .catch((error) => {

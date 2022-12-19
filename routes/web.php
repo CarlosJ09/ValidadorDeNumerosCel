@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Resources\RoleResource;
 use Inertia\Inertia;
 
 /*
@@ -20,7 +22,6 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Login', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);

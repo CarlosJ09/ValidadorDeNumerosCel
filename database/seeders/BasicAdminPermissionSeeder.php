@@ -17,7 +17,8 @@ class BasicAdminPermissionSeeder extends Seeder
     public function run()
     {
         // Reset cached roles and permissions
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();        // create permissions
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        // create permissions
         $permissions = [
             'permission list',
             'permission create',
@@ -29,40 +30,49 @@ class BasicAdminPermissionSeeder extends Seeder
             'role delete',
             'user list',
             'user create',
-            'user edit',
             'user delete',
-            'post list',
-            'post create',
-            'post edit',
-            'post delete',
+            'user edit',
         ];
+
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
-        }        // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'writer']);
-        $role1->givePermissionTo('permission list');
-        $role1->givePermissionTo('role list');
-        $role1->givePermissionTo('user list');
-        $role1->givePermissionTo('post list');
-        $role1->givePermissionTo('post create');
-        $role1->givePermissionTo('post edit');
-        $role1->givePermissionTo('post delete');
-        $role2 = Role::create(['name' => 'admin']);
-        foreach ($permissions as $permission) {
-            $role2->givePermissionTo($permission);
         }
+
+        /* Roles Y Permisos */
+
+        // Rol Agente
+        $role1 = Role::create(['name' => 'agente']);
+
+        //Rol Admin
+        $role2 = Role::create(['name' => 'admin']);
+        $role2->givePermissionTo('permission list');
+        $role2->givePermissionTo('role list');
+        $role2->givePermissionTo('user list');
+
+        //Rol Super Admin
         $role3 = Role::create(['name' => 'super-admin']);
-        // gets all permissions via Gate::before rule; see AuthServiceProvider        // create demo users
+        // gets all permissions via Gate::before rule; see AuthServiceProvider        
+        // create demo users
+
+
+
+        /* Usuarios con Roles */
+
+        //Usuario Super Admin
         $user = \App\Models\User::factory()->create([
             'name' => 'Super Admin',
             'email' => 'superadmin@laraveltuts.com',
         ]);
         $user->assignRole($role3);
+
+        //Usuario Admin
         $user = \App\Models\User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@laraveltuts.com',
         ]);
         $user->assignRole($role2);
+
+        //Usuario Agente
         $user = \App\Models\User::factory()->create([
             'name' => 'Example User',
             'email' => 'test@laraveltuts.com',

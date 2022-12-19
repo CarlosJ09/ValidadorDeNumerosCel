@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
@@ -30,12 +29,6 @@ const showingNavigationDropdown = ref(false);
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
                                 <NavLink
-                                    :href="route('home')"
-                                    :active="route().current('home')"
-                                >
-                                    Home
-                                </NavLink>
-                                <NavLink
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
                                 >
@@ -45,7 +38,7 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('user.index')"
                                     :active="route().current('user.index')"
                                 >
-                                    Users
+                                    Usuarios
                                 </NavLink>
                                 <NavLink
                                     :href="route('permission.index')"
@@ -53,13 +46,13 @@ const showingNavigationDropdown = ref(false);
                                         route().current('permission.index')
                                     "
                                 >
-                                    Permission
+                                    Permisos
                                 </NavLink>
                                 <NavLink
                                     :href="route('role.index')"
                                     :active="route().current('role.index')"
                                 >
-                                    Role
+                                    Roles
                                 </NavLink>
                             </div>
                         </div>
@@ -177,9 +170,6 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                    <!--         <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
-                            </ResponsiveNavLink> -->
                             <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"

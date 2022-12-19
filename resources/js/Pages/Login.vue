@@ -33,33 +33,51 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit" class="py-4">
-            <div>
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    placeholder="Usuario"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+            <div class="flex flex-col">
+                <div>
+                    <TextInput
+                        id="email"
+                        type="email"
+                        class="mt-1 block w-full"
+                        placeholder="Usuario"
+                        v-model="form.email"
+                        required
+                        autofocus
+                        autocomplete="username"
+                    />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                    <InputError class="mt-2" :message="form.errors.email" />
+                </div>
+
+                <span class="absolute mr-4 mt-4 place-self-end"
+                    ><img
+                        class="bg-cover w-6"
+                        src="../../assets/ic-profile_97616.png"
+                        alt=""
+                    />
+                </span>
             </div>
+            <div class="flex flex-col mt-4">
+                <div>
+                    <TextInput
+                        id="password"
+                        type="password"
+                        class="mt-1 block w-full"
+                        placeholder="Contraseña"
+                        v-model="form.password"
+                        required
+                        autocomplete="current-password"
+                    />
 
-            <div class="mt-4">
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    placeholder="Contraseña"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
+                    <InputError class="mt-2" :message="form.errors.password" />
+                </div>
+                <span class="absolute mr-3 mt-2 place-self-end"
+                    ><img
+                        class="bg-cover w-8"
+                        src="../../assets/icons8-desbloquear-96.png"
+                        alt=""
+                    />
+                </span>
             </div>
 
             <div class="block mt-4">
@@ -71,7 +89,7 @@ const submit = () => {
 
             <div class="flex flex-col gap-2 items-center justify-center mt-4">
                 <PrimaryButton
-                class="w-44 h-10 justify-center"
+                    class="w-44 h-10 justify-center"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
